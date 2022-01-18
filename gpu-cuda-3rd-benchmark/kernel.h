@@ -7,15 +7,15 @@
 typedef unsigned char byte_t;
 typedef std::vector<byte_t> bytes_t;
 
-__host__ __device__ static double sigmoid(double x)
-{
-  return 1.0 / (1.0 + exp(-x));
-}
-
 __declspec(align(1)) struct rgb_t
 {
   byte_t r, g, b;
 };
+
+__host__ __device__ static double sigmoid(double x)
+{
+  return 1.0 / (1.0 + exp(-x));
+}
 
 #define transform_pixel(rgb_pixel)\
   byte_t(sigmoid((0.3 * rgb_pixel.r) + (0.59 * rgb_pixel.g) + (0.11 * rgb_pixel.b)) * 0xff)
