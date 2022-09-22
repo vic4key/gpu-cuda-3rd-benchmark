@@ -18,7 +18,7 @@ int main()
   assert(vu::host::device_count() > 0);
   cout << vu::host::device_name(vu::host::device_id()) << endl;
 
-  vu::ScopeStopWatchA watcher("BENCHMARK", vu::ScopeStopWatchA::console);
+  vu::ScopeStopWatchA watcher("BENCHMARK", " ", vu::ScopeStopWatchA::console);
 
   int width = 0;
   int height = 0;
