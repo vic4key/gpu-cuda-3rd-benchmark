@@ -18,7 +18,7 @@ int main()
   assert(vu::host::device_count() > 0);
   cout << vu::host::device_name(vu::host::device_id()) << endl;
 
-  vu::ScopeStopWatchA watcher("BENCHMARK", vu::ScopeStopWatchA::console);
+  vu::ScopeStopWatchA watcher("BENCHMARK", " ", vu::ScopeStopWatchA::console);
 
   int width = 0;
   int height = 0;
@@ -26,7 +26,7 @@ int main()
   auto pixels = SOIL_load_image("data\\test.bmp", &width, &height, &channel, SOIL_LOAD_AUTO);
   assert(pixels != nullptr);
 
-  watcher.log("LOAD DATA   : ");
+  watcher.log("LOAD DATA   :");
 
   auto src_pixels = reinterpret_cast<rgb_t*>(pixels);
   bytes_t dst_pixels(width * height);
@@ -44,10 +44,10 @@ int main()
   };
 
   {
-    fn_conv_and_save("CPU-CPU     : ", "data\\test_cpu.bmp", transform_image_cpu);
-    fn_conv_and_save("GPU-NATIVE  : ", "data\\test_gpu_native.bmp", transform_image_gpu_native);
-    fn_conv_and_save("GPU-THRUST  : ", "data\\test_gpu_thrust.bmp", transform_image_gpu_thrust);
-    fn_conv_and_save("GPU-WRAPPER : ", "data\\test_gpu_wrapper.bmp", transform_image_gpu_wrapper);
+    fn_conv_and_save("CPU-CPU     :", "data\\test_cpu.bmp", transform_image_cpu);
+    fn_conv_and_save("GPU-NATIVE  :", "data\\test_gpu_native.bmp", transform_image_gpu_native);
+    fn_conv_and_save("GPU-THRUST  :", "data\\test_gpu_thrust.bmp", transform_image_gpu_thrust);
+    fn_conv_and_save("GPU-WRAPPER :", "data\\test_gpu_wrapper.bmp", transform_image_gpu_wrapper);
   }
 
   SOIL_free_image_data(pixels);
