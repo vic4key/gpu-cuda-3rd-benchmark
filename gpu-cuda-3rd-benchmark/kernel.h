@@ -17,6 +17,11 @@ __host__ __device__ static double sigmoid(double x)
   return 1.0 / (1.0 + exp(-x));
 }
 
+// transform a rgb pixel to a gray pixel
+//#define transform_pixel(rgb_pixel)\
+//  ((0.30 * rgb_pixel.r) + (0.59 * rgb_pixel.g) + (0.11 * rgb_pixel.b))
+
+// transform a rgb pixel with a heavy calculation for benchmark
 #define transform_pixel(rgb_pixel)\
   byte_t(sigmoid((0.3 * rgb_pixel.r) + (0.59 * rgb_pixel.g) + (0.11 * rgb_pixel.b)) * 0xff)
 
