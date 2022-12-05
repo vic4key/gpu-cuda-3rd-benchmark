@@ -1,0 +1,5 @@
+<Project>
+	<ImportGroup Label="PropertySheets">
+		<Import Condition="'$(SolutionFileName)' != ''" Project="$(SolutionDir)gpu-cuda-3rd-benchmark\3rdparty\gl-3rdparty\Directory.Build.props"/>
+	</ImportGroup>
+</Project>

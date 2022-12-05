@@ -1,0 +1,6 @@
+[submodule "gpu-cuda-3rd-benchmark/3rdparty/cuda-api-wrappers"]
+	path = gpu-cuda-3rd-benchmark/3rdparty/cuda-api-wrappers
+	url = https://github.com/vn-os/3rd-cuda-api-wrappers.git
+[submodule "gpu-cuda-3rd-benchmark/3rdparty/gl-3rdparty"]
+	path = gpu-cuda-3rd-benchmark/3rdparty/gl-3rdparty
+	url = https://github.com/vn-os/3rd-gl-3rdparty.git
