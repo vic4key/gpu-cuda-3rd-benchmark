@@ -91,11 +91,7 @@ void transform_image_gpu_thrust(int width, int height, rgb_t* src_pixels, bytes_
       return transform_pixel(src_pixel);
     });
 
-    // const auto ec = vu::host::calculate_execution_configuration(width, height, cuda_native_kernel);
-    // cuda::launch(
-    //   cuda_native_kernel,
-    //   cuda::make_launch_config(ec.first, ec.second),
-    //   width, height, d_src_pixels.data().get(), d_dst_pixels.data().get());
+    vu::host::device_synchronize();
 
     thrust::copy(d_dst_pixels.begin(), d_dst_pixels.end(), &dst_pixels[0]);
   }
@@ -113,20 +109,18 @@ void transform_image_gpu_wrapper(int width, int height, rgb_t* src_pixels, bytes
 
     assert(num_pixels == static_cast<int>(dst_pixels.size()));
 
-    auto device = cuda::device::current::get();
-
-    auto d_src_pixels = cuda::memory::device::make_unique<rgb_t[]>(device, num_pixels);
+    auto d_src_pixels = cuda::memory::device::make_unique<rgb_t[]>(num_pixels);
     cuda::memory::copy(d_src_pixels.get(), src_pixels, num_pixels * sizeof(rgb_t));
 
-    auto d_dst_pixels = cuda::memory::device::make_unique<byte_t[]>(device, num_pixels);
+    auto d_dst_pixels = cuda::memory::device::make_unique<byte_t[]>(num_pixels);
 
     const auto ec = vu::host::calculate_execution_configuration(width, height, cuda_native_kernel);
-    device.launch(
+    cuda::launch(
       cuda_native_kernel,
       cuda::make_launch_config(ec.first, ec.second),
       width, height, d_src_pixels.get(), d_dst_pixels.get());
 
-    device.synchronize();
+    vu::host::device_synchronize();
 
     cuda::memory::copy(&dst_pixels[0], d_dst_pixels.get(), num_pixels * sizeof(byte_t));
   }
